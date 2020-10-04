@@ -1,4 +1,4 @@
-const Turma = require('../models/Turma')
+const Comanda = require('../models/Comanda')
 
 const controller = {}
 
@@ -7,7 +7,7 @@ controller.novo = async (req, res) => {
     // Usa os dados que chega dentro do body da requisição
     // e depois envia ao BD para a criação de um novo objeto
     try{
-        await Turma.create(req.body) 
+        await Comanda.create(req.body) 
         // HTTP 201: Created
         res.status(201).end()
     }
@@ -22,11 +22,8 @@ controller.novo = async (req, res) => {
 
 controller.listar = async (req, res) => {
     try{
-        let dados = await Turma.find() //traz todos os cursos cadastrados
-        .populate('curso', 'nome') //Somente o atributo nome
-        .populate('professor') //todos os atributos
-        .populate('sala_aula', 'nome capacidade') // somente nome e capacidade
-        res.send(dados)// Vai com status HTTP: 200 OK
+        let dados = await Comanda.find() //traz todos os cursos cadastrados
+        res.send(dados)
     }
     catch(erro){
         console.log(erro)
@@ -40,7 +37,7 @@ controller.obterUm = async (req, res) =>{
     try{
         //capturando o parametro ID da url
         const id = req.params.id
-        let obj = await Turma.findById(id)
+        let obj = await Comanda.findById(id)
 
         //o objeto existe e foi encontrato
         if(obj) res.send(obj)      //HTTP 200
@@ -61,7 +58,7 @@ controller.atualizar = async (req, res) => {
         const id = req.body._id
 
         // Busca e substituição do conteúdo do objeto
-        let ret = await Turma.findByIdAndUpdate(id, req.body)
+        let ret = await Comanda.findByIdAndUpdate(id, req.body)
 
         // Se encontrou e atualizou, retornamos HTTP 204: No content
         if(ret) res.status(204).end()
@@ -82,7 +79,7 @@ controller.excluir = async (req, res) => {
         const id = req.body._id
         
         //Busca pelo id e exclusao
-        let ret = await Turma.findByIdAndDelete(id)
+        let ret = await Comanda.findByIdAndDelete(id)
 
         //encontrou e excluiu, HTTP 204: No content
         if(ret) res.status(204).end()

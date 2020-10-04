@@ -1,13 +1,13 @@
-const Turma = require('../models/Turma')
+const Entrega = require('../models/Entrega')
 
 const controller = {}
 
 //OPERAÇÃO CREATE, funcção novo()
-controller.novo = async (req, res) => {
+controller.pedido = async (req, res) => {
     // Usa os dados que chega dentro do body da requisição
     // e depois envia ao BD para a criação de um novo objeto
     try{
-        await Turma.create(req.body) 
+        await Entrega.create(req.body) 
         // HTTP 201: Created
         res.status(201).end()
     }
@@ -20,13 +20,10 @@ controller.novo = async (req, res) => {
 
 //OPERAÇÃO RETRIEVE (all), função listar()
 
-controller.listar = async (req, res) => {
+controller.listarPedidos = async (req, res) => {
     try{
-        let dados = await Turma.find() //traz todos os cursos cadastrados
-        .populate('curso', 'nome') //Somente o atributo nome
-        .populate('professor') //todos os atributos
-        .populate('sala_aula', 'nome capacidade') // somente nome e capacidade
-        res.send(dados)// Vai com status HTTP: 200 OK
+        let dados = await Entrega.find() //traz todos os cursos cadastrados
+        res.send(dados)
     }
     catch(erro){
         console.log(erro)
@@ -36,11 +33,11 @@ controller.listar = async (req, res) => {
 
 //OPERAÇÃO RETRIEVE (one), função obterUm()
 
-controller.obterUm = async (req, res) =>{
+controller.obterUmPedido = async (req, res) =>{
     try{
         //capturando o parametro ID da url
         const id = req.params.id
-        let obj = await Turma.findById(id)
+        let obj = await Entrega.findById(id)
 
         //o objeto existe e foi encontrato
         if(obj) res.send(obj)      //HTTP 200
@@ -55,13 +52,13 @@ controller.obterUm = async (req, res) =>{
 
 //OPERAÇÃO UPDATE, função atualizar()
 
-controller.atualizar = async (req, res) => {
+controller.atualizarPedido = async (req, res) => {
     // Isolar o _id do objeto que está sendo alterado
     try{
         const id = req.body._id
 
         // Busca e substituição do conteúdo do objeto
-        let ret = await Turma.findByIdAndUpdate(id, req.body)
+        let ret = await Entrega.findByIdAndUpdate(id, req.body)
 
         // Se encontrou e atualizou, retornamos HTTP 204: No content
         if(ret) res.status(204).end()
@@ -76,13 +73,13 @@ controller.atualizar = async (req, res) => {
 
 //OPERAÇÃO DELETE, função excluir()
 
-controller.excluir = async (req, res) => {
+controller.excluirPedido = async (req, res) => {
     try{
         //Isolando o id
         const id = req.body._id
         
         //Busca pelo id e exclusao
-        let ret = await Turma.findByIdAndDelete(id)
+        let ret = await Entrega.findByIdAndDelete(id)
 
         //encontrou e excluiu, HTTP 204: No content
         if(ret) res.status(204).end()

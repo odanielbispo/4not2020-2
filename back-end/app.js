@@ -39,4 +39,19 @@ app.use('/sala-aula', sala_aula)
 const turma =  require('./routes/turma')
 app.use('/turma', turma)
 
+const produto =  require('./routes/produto')
+app.use('/produto', produto)
+
+const entrega =  require('./routes/entrega')
+app.use('/entrega', entrega)
+
+const comanda =  require('./routes/comanda')
+app.use('/comanda', comanda)
+
+const entregador =  require('./routes/entregador')
+app.use('/entregador', entregador)
+
+const funcionario =  require('./routes/funcionario')
+app.use('/funcionario', funcionario)
+
 module.exports = app;
